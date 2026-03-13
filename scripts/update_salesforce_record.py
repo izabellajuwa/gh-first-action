@@ -130,8 +130,10 @@ def normalize_payload(payload: dict[str, Any]) -> tuple[str, str, dict[str, Any]
 
 
 def request_access_token() -> tuple[str, str, str]:
-    login_url = os.getenv("SF_LOGIN_URL", "https://login.salesforce.com").rstrip("/")
-    api_version = os.getenv("SF_API_VERSION", "v61.0")
+    login_url = (
+        os.getenv("SF_LOGIN_URL", "").strip() or "https://login.salesforce.com"
+    ).rstrip("/")
+    api_version = os.getenv("SF_API_VERSION", "").strip() or "v61.0"
 
     auth_payload = {
         "grant_type": "password",
